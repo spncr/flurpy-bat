@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddewut8n78qfu"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_ii88a"]
+[ext_resource type="PackedScene" uid="uid://brsb4agovh7fr" path="res://bat.tscn" id="1_tcvb3"]
+[ext_resource type="PackedScene" uid="uid://d2md16w8nikag" path="res://obstacle.tscn" id="2_hkenj"]
+[ext_resource type="Texture2D" uid="uid://cb5f48tq32tld" path="res://stripe.png" id="4_a4tnd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wdbn"]
+size = Vector2(499.5, 20)
+
+[node name="World" type="Node"]
+script = ExtResource("1_ii88a")
+obstacle_scene = ExtResource("2_hkenj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 500.0
+offset_bottom = 700.0
+color = Color(0.145098, 0, 0.384314, 1)
+
+[node name="Bat" parent="." instance=ExtResource("1_tcvb3")]
+position = Vector2(120, 88)
+gravity = 1200
+
+[node name="Floor" type="StaticBody2D" parent="."]
+z_index = 1
+position = Vector2(250, 536)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("RectangleShape2D_3wdbn")
+metadata/_edit_lock_ = true
+
+[node name="Stripe" type="Sprite2D" parent="Floor"]
+texture_repeat = 2
+position = Vector2(-323, -10)
+scale = Vector2(2, 2)
+texture = ExtResource("4_a4tnd")
+centered = false
+region_enabled = true
+region_rect = Rect2(1, 2.08165e-12, 400, 8)
+
+[node name="ColorRect" type="ColorRect" parent="Floor"]
+offset_left = -250.0
+offset_top = 5.0
+offset_right = 250.0
+offset_bottom = 70.0
+color = Color(0.156863, 0.00784314, 0.164706, 1)
+
+[node name="Obstacle" parent="." instance=ExtResource("2_hkenj")]
+position = Vector2(500, 202)
+
+[node name="ObstacleTimer" type="Timer" parent="."]
+wait_time = 2.4
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(120, 220)
+
+[connection signal="timeout" from="ObstacleTimer" to="." method="_on_obstacle_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

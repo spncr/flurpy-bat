@@ -1,0 +1,6 @@
+res://default_env.tres
+res://world.tscn
+res://world.gd
+res://bat.tscn
+res://obstacle.tscn
+res://bat.gd
