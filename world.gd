@@ -28,3 +28,5 @@ func _on_obstacle_timer_timeout():
 	obstacle.position.y = randf_range(60, 290)
 	add_child(obstacle)
 
+func _on_bat_died():
+	print("whirled heard you died")

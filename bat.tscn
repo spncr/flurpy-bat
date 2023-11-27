@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ds6463uymlud" path="res://batss.png" id="2_uxaki"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmpo5"]
-size = Vector2(32, 32)
+size = Vector2(34, 34)
 
 [sub_resource type="Animation" id="Animation_bpbxo"]
 resource_name = "hover"
@@ -51,6 +51,7 @@ gravity = 200
 power = 40000
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 1)
 shape = SubResource("RectangleShape2D_hmpo5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

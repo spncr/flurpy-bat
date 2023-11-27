@@ -46,9 +46,6 @@ offset_right = 250.0
 offset_bottom = 70.0
 color = Color(0.156863, 0.00784314, 0.164706, 1)
 
-[node name="Obstacle" parent="." instance=ExtResource("2_hkenj")]
-position = Vector2(500, 202)
-
 [node name="ObstacleTimer" type="Timer" parent="."]
 wait_time = 2.4
 
@@ -59,5 +56,6 @@ autostart = true
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(120, 220)
 
+[connection signal="died" from="Bat" to="." method="_on_bat_died"]
 [connection signal="timeout" from="ObstacleTimer" to="." method="_on_obstacle_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
