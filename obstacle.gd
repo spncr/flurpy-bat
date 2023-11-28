@@ -1,13 +1,21 @@
-extends StaticBody2D
+extends Area2D
 
+signal scored
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	constant_linear_velocity = Vector2(-100, 0)
+var speed:float = 0
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	position.x -= 100 * delta
+func _process(delta):
+	position.x -= speed * delta
 
 func _on_screen_exited():
 	queue_free()
+
+func start_moving(new_speed):
+	speed = new_speed
+	
+func stop_moving():
+	speed = 0
+
+
+func _on_score_area_exited(area):
+	emit_signal("scored")

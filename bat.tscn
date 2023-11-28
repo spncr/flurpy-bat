@@ -45,9 +45,9 @@ _data = {
 "hover": SubResource("Animation_bpbxo")
 }
 
-[node name="bat" type="CharacterBody2D"]
+[node name="bat" type="Area2D"]
+collision_layer = 3
 script = ExtResource("1_icw6q")
-gravity = 200
 power = 40000
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -63,3 +63,5 @@ autoplay = "hover"
 libraries = {
 "": SubResource("AnimationLibrary_8ltc3")
 }
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
