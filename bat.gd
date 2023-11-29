@@ -8,7 +8,7 @@ var velocity = Vector2.ZERO
 @export var MAX_SPEED = 1200
 @export var power = 32000
 
-@onready var sprite = $Sprite2D
+@onready var sprite = $body
 
 func _process(delta):
 	velocity.y += grav * delta
@@ -27,9 +27,9 @@ func _process(delta):
 	sprite.set_rotation(lerp_angle(sprite.rotation, new_rotation, delta * 30))
 
 	position += velocity * delta
-	if position.y >= 520:
+	if position.y >= 500:
 		velocity.y = 0
-	position.y = clampf(position.y, -100, 520)
+	position.y = clampf(position.y, -100, 500)
 
 func start(pos):
 	position = pos
@@ -37,4 +37,6 @@ func start(pos):
 	$CollisionShape2D.disabled = false
 
 func _on_area_entered(area):
+	print(position.y)
+	velocity = Vector2.ZERO
 	emit_signal("died") # Replace with function body.

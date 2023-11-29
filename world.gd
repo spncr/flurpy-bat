@@ -23,12 +23,13 @@ func end_game():
 	$"HUD/Game Over".visible = true
 	
 func start_game():
-	score = 0
 	game_over = false
 	$"HUD/Game Over".visible = false
 	get_tree().call_group("obstacles", "queue_free")
-	$ObstacleTimer.start()
 	$Bat.start($StartPosition.position)
+	$ObstacleTimer.start()
+	score = 0
+	$HUD/Score.text = str(score)
 	
 func _on_obstacle_timer_timeout():
 	var obstacle = obstacle_scene.instantiate()
