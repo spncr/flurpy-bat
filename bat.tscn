@@ -19,12 +19,6 @@ tracks/0/keys = {
 "values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_bpbxo"]
-resource_name = "hover"
-length = 0.32
-loop_mode = 1
-step = 0.08
-
 [sub_resource type="Animation" id="Animation_1lw7i"]
 resource_name = "flappy"
 length = 0.24
@@ -42,6 +36,12 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0, 0.314159, -0.314159]
 }
+
+[sub_resource type="Animation" id="Animation_bpbxo"]
+resource_name = "hover"
+length = 0.32
+loop_mode = 1
+step = 0.08
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8ltc3"]
 _data = {

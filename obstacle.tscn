@@ -10,7 +10,7 @@ size = Vector2(60, 410)
 size = Vector2(40, 160)
 
 [node name="Obstacle" type="Area2D" groups=["obstacles"]]
-z_index = 1
+z_index = -1
 position = Vector2(2.08165e-12, 2.08165e-12)
 collision_mask = 0
 script = ExtResource("1_bic4e")
