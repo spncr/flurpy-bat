@@ -27,12 +27,12 @@ func _ready():
 	_score_label.visible = false
 	_game_over_label.visible = false
 	game_state = GameState.READY
+	_bat.get_ready(_start_position)
 
 
 func _process(delta):
 	match game_state:
 		GameState.READY:
-			_bat.start(_start_position)
 			move_floor(delta)
 			if Input.is_action_just_pressed("button"):
 				start_game()
@@ -50,7 +50,7 @@ func get_ready(delta):
 	get_tree().call_group("obstacles", "queue_free")
 	_ready_label.visible = true
 	_score_label.visible = false
-	_bat.start(_start_position)
+	_bat.get_ready(_start_position)
 	move_floor(delta)
 	_animation_player.play_backwards("fade_to_black")
 	await _animation_player.animation_finished

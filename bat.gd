@@ -4,18 +4,21 @@ signal died()
 
 var velocity = Vector2.ZERO
 var playing = false
+var can_input = false
 
 @export var grav = 1100
 @export var MAX_SPEED = 1200
 @export var power = 32000
 
-@onready var sprite = $body
+@onready var _sprite = $body
+
 
 func _process(delta):
 	if playing:
 		velocity.y += grav * delta
 		
-		if Input.is_action_just_pressed("button"):
+		if Input.is_action_just_pressed("button") and can_input:
+			$AnimationPlayer.play("jump")
 			velocity.y -= power * delta
 
 		velocity.y = clamp(velocity.y, -MAX_SPEED, MAX_SPEED)
@@ -25,19 +28,29 @@ func _process(delta):
 			new_rotation = remap(velocity.y, -MAX_SPEED, 0, -PI/4, 0)
 		else:
 			new_rotation = remap(velocity.y, 0, MAX_SPEED, 0, PI)
-
-		sprite.set_rotation(lerp_angle(sprite.rotation, new_rotation, delta * 30))
+		_sprite.set_rotation(lerp_angle(_sprite.rotation, new_rotation, delta * 30))
 
 		position += velocity * delta
 		if position.y >= 500:
 			velocity.y = 0
 		position.y = clampf(position.y, -100, 500)
+		
 
-func start(pos):
+func get_ready(pos):
 	position = pos
-
+	can_input = true
+	$AnimationPlayer.play("flappy")
+	_sprite.set_rotation(0)
 
 func _on_area_entered(area):
+	if area.name == "Floor":
+		playing = false
+		emit_signal("died") # Replace with function body.
 	velocity = Vector2.ZERO
-	playing = false
-	emit_signal("died") # Replace with function body.
+	$AnimationPlayer.play('dead')
+	can_input = false
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "jump":
+		$AnimationPlayer.play("flappy")

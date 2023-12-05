@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://brsb4agovh7fr"]
+[gd_scene load_steps=11 format=3 uid="uid://brsb4agovh7fr"]
 
 [ext_resource type="Script" path="res://bat.gd" id="1_icw6q"]
 [ext_resource type="Texture2D" uid="uid://c8tp050wq4yk3" path="res://bat_body.png" id="3_1cqq4"]
+[ext_resource type="Texture2D" uid="uid://dbnwste6m2nw3" path="res://bat_dead.png" id="4_48oam"]
 [ext_resource type="Texture2D" uid="uid://b7wmq5k4lj0px" path="res://bat_wing.png" id="4_w73b1"]
 
 [sub_resource type="Animation" id="Animation_bkse2"]
@@ -13,6 +14,42 @@ tracks/0/path = NodePath("body/wing:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("body/death:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("body/death:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("body:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -36,18 +73,70 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0, 0.314159, -0.314159]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("body/death:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
-[sub_resource type="Animation" id="Animation_bpbxo"]
-resource_name = "hover"
-length = 0.32
-loop_mode = 1
-step = 0.08
+[sub_resource type="Animation" id="Animation_6nuva"]
+resource_name = "dead"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body/death:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("body/death:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_rfvn2"]
+resource_name = "jump"
+length = 0.24
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body/wing:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.18),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.837758, -0.837758]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8ltc3"]
 _data = {
 "RESET": SubResource("Animation_bkse2"),
+"dead": SubResource("Animation_6nuva"),
 "flappy": SubResource("Animation_1lw7i"),
-"hover": SubResource("Animation_bpbxo")
+"jump": SubResource("Animation_rfvn2")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmpo5"]
@@ -67,6 +156,11 @@ position = Vector2(-4.39761, 10.2439)
 texture = ExtResource("4_w73b1")
 offset = Vector2(2.89649, -10.7651)
 
+[node name="death" type="Sprite2D" parent="body"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("4_48oam")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "flappy"
 libraries = {
@@ -79,3 +173,4 @@ shape = SubResource("RectangleShape2D_hmpo5")
 metadata/_edit_lock_ = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
