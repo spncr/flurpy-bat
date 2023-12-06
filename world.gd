@@ -8,9 +8,12 @@ enum GameState {
 	OVER
 }
 
+const SAVE_FILE_PATH := "user://highscore.save"
+
 var game_state: GameState
 
 var score: int = 0
+var high_score: int= 0
 var speed: float = 100
 
 @onready var _ready_label := $"HUD/Ready?"
@@ -28,7 +31,7 @@ func _ready():
 	_game_over_label.visible = false
 	game_state = GameState.READY
 	_bat.get_ready(_start_position)
-
+	load_high_score()
 
 func _process(delta):
 	match game_state:
@@ -71,9 +74,24 @@ func end_game():
 	_obstacle_timer.stop()
 	get_tree().call_group("obstacles", "stop_moving")
 	_animation_player.play("game_over_descends")
+	
+	if score > high_score:
+		high_score = score
+		save_high_score()
+	print(high_score)
 
 func move_floor(delta):
 	_floor_stripe.region_rect.position.x += (speed / 2 * delta)
+
+func save_high_score():
+	var save_data = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
+	save_data.store_var(high_score)
+
+
+func load_high_score():
+	if FileAccess.file_exists(SAVE_FILE_PATH):
+		var save_data = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
+		high_score = save_data.get_var()
 
 ## Callbacks
 func _on_obstacle_timer_timeout():
@@ -96,3 +114,4 @@ func _on_scored():
 		if score == 1:
 			_score_label.visible = true
 		_score_label.text = str(score)
+

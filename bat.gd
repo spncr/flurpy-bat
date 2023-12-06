@@ -11,6 +11,7 @@ var can_input = false
 @export var power = 32000
 
 @onready var _sprite = $body
+@onready var _particles := $GPUParticles2D
 
 
 func _process(delta):
@@ -20,6 +21,8 @@ func _process(delta):
 		if Input.is_action_just_pressed("button") and can_input:
 			$AnimationPlayer.play("jump")
 			velocity.y -= power * delta
+			_particles.restart()
+			_particles.emitting = true
 
 		velocity.y = clamp(velocity.y, -MAX_SPEED, MAX_SPEED)
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://brsb4agovh7fr"]
+[gd_scene load_steps=14 format=3 uid="uid://brsb4agovh7fr"]
 
 [ext_resource type="Script" path="res://bat.gd" id="1_icw6q"]
 [ext_resource type="Texture2D" uid="uid://c8tp050wq4yk3" path="res://bat_body.png" id="3_1cqq4"]
@@ -56,6 +56,34 @@ tracks/3/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_6nuva"]
+resource_name = "dead"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body/death:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("body/death:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_1lw7i"]
 resource_name = "flappy"
 length = 0.24
@@ -86,34 +114,6 @@ tracks/1/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_6nuva"]
-resource_name = "dead"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("body/death:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("body/death:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_rfvn2"]
 resource_name = "jump"
 length = 0.24
@@ -142,6 +142,32 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmpo5"]
 size = Vector2(34, 25)
 
+[sub_resource type="Gradient" id="Gradient_0pai0"]
+offsets = PackedFloat32Array(0.525926, 1)
+colors = PackedColorArray(1, 1, 1, 0.564706, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xeohe"]
+gradient = SubResource("Gradient_0pai0")
+width = 24
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2c5m3"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(20, 2.08165e-12, 2.08165e-12)
+direction = Vector3(2.08165e-12, -1, 2.08165e-12)
+spread = 0.0
+initial_velocity_min = -200.0
+initial_velocity_max = -100.0
+orbit_velocity_min = 2.08167e-14
+orbit_velocity_max = 2.08167e-14
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+attractor_interaction_enabled = false
+color_ramp = SubResource("GradientTexture1D_xeohe")
+turbulence_enabled = true
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.34
+
 [node name="bat" type="Area2D"]
 collision_layer = 3
 script = ExtResource("1_icw6q")
@@ -162,15 +188,28 @@ modulate = Color(1, 1, 1, 0)
 texture = ExtResource("4_48oam")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "flappy"
 libraries = {
 "": SubResource("AnimationLibrary_8ltc3")
 }
+autoplay = "flappy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-5, 14.5)
 shape = SubResource("RectangleShape2D_hmpo5")
 metadata/_edit_lock_ = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-16, 18)
+emitting = false
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_2c5m3")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+trail_lifetime = 0.2
+trail_sections = 3
+trail_section_subdivisions = 1
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
