@@ -1,10 +1,11 @@
 extends Area2D
 
 signal died()
+signal corpse_on_floor()
 
 var velocity = Vector2.ZERO
-var playing = false
-var can_input = false
+var can_move = false
+var can_input = false 
 
 @export var grav = 1100
 @export var MAX_SPEED = 1200
@@ -15,7 +16,7 @@ var can_input = false
 
 
 func _process(delta):
-	if playing:
+	if can_move:
 		velocity.y += grav * delta
 		
 		if Input.is_action_just_pressed("button") and can_input:
@@ -34,10 +35,7 @@ func _process(delta):
 		_sprite.set_rotation(lerp_angle(_sprite.rotation, new_rotation, delta * 30))
 
 		position += velocity * delta
-		if position.y >= 500:
-			velocity.y = 0
-		position.y = clampf(position.y, -100, 500)
-		
+		position.y = clampf(position.y, -20, 500)
 
 func get_ready(pos):
 	position = pos
@@ -46,12 +44,16 @@ func get_ready(pos):
 	_sprite.set_rotation(0)
 
 func _on_area_entered(area):
-	if area.name == "Floor":
-		playing = false
-		emit_signal("died") # Replace with function body.
 	velocity = Vector2.ZERO
-	$AnimationPlayer.play('dead')
+	
+	if can_input == true:
+		$AnimationPlayer.play("dead")
+		emit_signal("died")
 	can_input = false
+	
+	if area.name == "Floor":
+		can_move = false
+		emit_signal("corpse_on_floor")
 
 
 func _on_animation_player_animation_finished(anim_name):

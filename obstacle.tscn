@@ -7,7 +7,7 @@
 size = Vector2(60, 410)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7x5k8"]
-size = Vector2(40, 160)
+size = Vector2(4, 160)
 
 [node name="Obstacle" type="Area2D" groups=["obstacles"]]
 z_index = -1
@@ -49,7 +49,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Score"]
-position = Vector2(12, 82)
+position = Vector2(2.08165e-12, 82)
 shape = SubResource("RectangleShape2D_7x5k8")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
