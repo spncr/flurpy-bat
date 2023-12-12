@@ -10,4 +10,6 @@ offset_bottom = 23.0
 theme_override_fonts/font = ExtResource("1_s4wli")
 theme_override_font_sizes/font_size = 24
 text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
 script = ExtResource("1_j8rah")

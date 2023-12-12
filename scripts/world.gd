@@ -90,6 +90,13 @@ func load_high_score():
 		var save_data = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
 		high_score = save_data.get_var()
 
+func show_score():
+	var score_label = score_scene.instantiate()
+	add_child(score_label)
+	score_label.position = _bat.position + (Vector2.LEFT * 48)
+	score_label.show_score(score, speed)
+
+
 ## Callbacks
 func _on_obstacle_timer_timeout():
 	var obstacle = obstacle_scene.instantiate()
@@ -107,13 +114,7 @@ func _on_bat_died():
 func _on_scored():
 	if game_state == GameState.GAME:
 		score += 1
-		if score > 0:
-			_score_label.visible = true
-		_score_label.text = str(score)
-	var score_label = score_scene.instantiate()
-	add_child(score_label)
-	score_label.global_position = _bat.position + (Vector2.LEFT * 80)
-	score_label.show_score(score)
+		show_score()
 
 func _on_bat_corpse_on_floor():
 	end_game()
