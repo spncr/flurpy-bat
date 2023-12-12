@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://brsb4agovh7fr"]
+[gd_scene load_steps=15 format=3 uid="uid://brsb4agovh7fr"]
 
-[ext_resource type="Script" path="res://bat.gd" id="1_icw6q"]
-[ext_resource type="Texture2D" uid="uid://c8tp050wq4yk3" path="res://bat_body.png" id="3_1cqq4"]
-[ext_resource type="Texture2D" uid="uid://dbnwste6m2nw3" path="res://bat_dead.png" id="4_48oam"]
-[ext_resource type="Texture2D" uid="uid://b7wmq5k4lj0px" path="res://bat_wing.png" id="4_w73b1"]
+[ext_resource type="Script" path="res://scripts/bat.gd" id="1_icw6q"]
+[ext_resource type="Texture2D" uid="uid://c8tp050wq4yk3" path="res://art/bat_body.png" id="3_1cqq4"]
+[ext_resource type="Texture2D" uid="uid://dbnwste6m2nw3" path="res://art/bat_dead.png" id="4_48oam"]
+[ext_resource type="Texture2D" uid="uid://b7wmq5k4lj0px" path="res://art/bat_wing.png" id="4_w73b1"]
+[ext_resource type="AudioStream" uid="uid://dmrvd6o57a1lc" path="res://sound/flap.wav" id="5_nyqqi"]
 
 [sub_resource type="Animation" id="Animation_bkse2"]
 length = 0.001
@@ -198,7 +199,7 @@ position = Vector2(-5, 14.5)
 shape = SubResource("RectangleShape2D_hmpo5")
 metadata/_edit_lock_ = true
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="JumpParticles" type="GPUParticles2D" parent="."]
 position = Vector2(-16, 18)
 emitting = false
 amount = 3
@@ -210,6 +211,11 @@ trail_enabled = true
 trail_lifetime = 0.2
 trail_sections = 3
 trail_section_subdivisions = 1
+
+[node name="FlapSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_nyqqi")
+volume_db = -20.0
+pitch_scale = 0.8
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

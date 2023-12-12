@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://1jgrfve4xu2c"]
+
+[ext_resource type="Script" path="res://score.gd" id="1_j8rah"]
+[ext_resource type="FontFile" uid="uid://cv3k4on32y3st" path="res://art/MinimalPixel v2.ttf" id="1_s4wli"]
+
+[node name="Score" type="Label"]
+offset_left = -69.225
+offset_right = -29.225
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_s4wli")
+theme_override_font_sizes/font_size = 24
+text = "10"
+script = ExtResource("1_j8rah")

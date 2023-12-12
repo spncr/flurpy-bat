@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb5f48tq32tld"
-path="res://.godot/imported/stripe.png-ac0bf5384cd8e43bf6c99ce6ae665f7a.ctex"
+uid="uid://b7wmq5k4lj0px"
+path="res://.godot/imported/bat_wing.png-5baec9570726c28d7b4ed0b52e9a19f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://stripe.png"
-dest_files=["res://.godot/imported/stripe.png-ac0bf5384cd8e43bf6c99ce6ae665f7a.ctex"]
+source_file="res://art/bat_wing.png"
+dest_files=["res://.godot/imported/bat_wing.png-5baec9570726c28d7b4ed0b52e9a19f5.ctex"]
 
 [params]
 

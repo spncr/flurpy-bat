@@ -12,15 +12,17 @@ var can_input = false
 @export var power = 32000
 
 @onready var _sprite = $body
-@onready var _particles := $GPUParticles2D
-
-
+@onready var _particles := $JumpParticles
+@onready var _score_label := $Score
+@onready var _flap_sound_player := $FlapSoundPlayer
 func _process(delta):
 	if can_move:
 		velocity.y += grav * delta
 		
 		if Input.is_action_just_pressed("button") and can_input:
 			$AnimationPlayer.play("jump")
+			_flap_sound_player.pitch_scale = randf_range(0.8, 1.2)
+			_flap_sound_player.play( )
 			velocity.y -= power * delta
 			_particles.restart()
 			_particles.emitting = true
@@ -42,7 +44,7 @@ func get_ready(pos):
 	can_input = true
 	$AnimationPlayer.play("flappy")
 	_sprite.set_rotation(0)
-
+	
 func _on_area_entered(area):
 	velocity = Vector2.ZERO
 	

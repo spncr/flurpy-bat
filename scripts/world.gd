@@ -1,6 +1,7 @@
 extends Node
 
 @export var obstacle_scene: PackedScene
+@export var score_scene: PackedScene
 
 enum GameState {
 	READY,
@@ -99,7 +100,6 @@ func _on_obstacle_timer_timeout():
 	obstacle.scored.connect(_on_scored)
 	add_child(obstacle)
 
-
 func _on_bat_died():
 	_animation_player.play("whiteout")
 	await _animation_player.animation_finished
@@ -110,6 +110,10 @@ func _on_scored():
 		if score > 0:
 			_score_label.visible = true
 		_score_label.text = str(score)
+	var score_label = score_scene.instantiate()
+	add_child(score_label)
+	score_label.global_position = _bat.position + (Vector2.LEFT * 80)
+	score_label.show_score(score)
 
 func _on_bat_corpse_on_floor():
 	end_game()

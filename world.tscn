@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://ddewut8n78qfu"]
+[gd_scene load_steps=14 format=3 uid="uid://ddewut8n78qfu"]
 
-[ext_resource type="Script" path="res://world.gd" id="1_ii88a"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_ii88a"]
 [ext_resource type="PackedScene" uid="uid://brsb4agovh7fr" path="res://bat.tscn" id="1_tcvb3"]
 [ext_resource type="PackedScene" uid="uid://d2md16w8nikag" path="res://obstacle.tscn" id="2_hkenj"]
-[ext_resource type="Texture2D" uid="uid://cb5f48tq32tld" path="res://stripe.png" id="4_a4tnd"]
-[ext_resource type="FontFile" uid="uid://cv3k4on32y3st" path="res://MinimalPixel v2.ttf" id="5_gxbii"]
+[ext_resource type="PackedScene" uid="uid://1jgrfve4xu2c" path="res://score.tscn" id="3_wvos7"]
+[ext_resource type="Texture2D" uid="uid://cb5f48tq32tld" path="res://art/stripe.png" id="4_a4tnd"]
+[ext_resource type="FontFile" uid="uid://cv3k4on32y3st" path="res://art/MinimalPixel v2.ttf" id="5_gxbii"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wdbn"]
 size = Vector2(499.5, 20)
@@ -219,6 +220,7 @@ _data = {
 [node name="World" type="Node"]
 script = ExtResource("1_ii88a")
 obstacle_scene = ExtResource("2_hkenj")
+score_scene = ExtResource("3_wvos7")
 
 [node name="BG" type="ColorRect" parent="."]
 z_index = -10
