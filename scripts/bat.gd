@@ -13,8 +13,8 @@ var can_input = false
 
 @onready var _sprite = $body
 @onready var _particles := $JumpParticles
-@onready var _score_label := $Score
 @onready var _flap_sound_player := $FlapSoundPlayer
+
 func _process(delta):
 	if can_move:
 		velocity.y += grav * delta

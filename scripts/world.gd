@@ -17,16 +17,16 @@ var score: int = 0
 var high_score: int= 0
 var speed: float = 100
 
-@onready var _score_label := $"HUD/Score"
 @onready var _bat := $Bat
 @onready var _start_position: Vector2 = $StartPosition.position
 @onready var _animation_player := $AnimationPlayer
 @onready var _obstacle_timer := $ObstacleTimer
 @onready var _floor_stripe := $Floor/Stripe
+@onready var _game_over_label := $"HUD/Game Over"
 
 func _ready():
 	load_high_score()
-	ready()
+	get_ready()
 
 func _process(delta):
 	match game_state:
@@ -38,38 +38,36 @@ func _process(delta):
 			move_floor(delta)
 		GameState.OVER:
 			if Input.is_action_just_pressed("button") and not _animation_player.is_playing():
-				get_ready(delta)
+				reset()
+				await reset() 
+				get_ready()
 
-func ready():
-	_animation_player.play_backwards("ready_go")
+func get_ready():
 	_bat.get_ready(_start_position)
+	_animation_player.play_backwards("fade_to_black")
+	await _animation_player.animation_finished
+	_animation_player.play("ready_go", -1, -2, true)
+	game_state = GameState.READY
 
-
-func get_ready(delta):
+func reset():
 	_animation_player.play("fade_to_black")
 	await _animation_player.animation_finished
 	get_tree().call_group("obstacles", "queue_free")
-	_animation_player.play_backwards("game_over_descends")
-	await _animation_player.animation_finished
-	ready()
-	_animation_player.play_backwards("fade_to_black")
-	await _animation_player.animation_finished
-	game_state = GameState.READY
-
+	_game_over_label.visible = false
 
 func start_game():
 	_animation_player.play("ready_go")
 	_bat.can_move = true
 	_obstacle_timer.start()
 	score = 0
-	_score_label.text = str(score)
 	game_state = GameState.GAME
 
 
 func end_game():
+	_animation_player.play("game_over_descends")
+	await _animation_player.animation_finished
 	_obstacle_timer.stop()
 	get_tree().call_group("obstacles", "stop_moving")
-	_animation_player.play("game_over_descends")
 	
 	if score > high_score:
 		high_score = score

@@ -10,12 +10,14 @@ func _process(delta):
 func _on_screen_exited():
 	queue_free()
 
+
 func start_moving(new_speed):
 	speed = new_speed
-	
+
+
 func stop_moving():
 	speed = 0
 
 
-func _on_score_area_exited(area):
+func _on_score_area_exited(_area):
 	emit_signal("scored")
