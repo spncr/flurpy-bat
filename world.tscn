@@ -1,11 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://ddewut8n78qfu"]
+[gd_scene load_steps=15 format=3 uid="uid://ddewut8n78qfu"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_ii88a"]
 [ext_resource type="PackedScene" uid="uid://brsb4agovh7fr" path="res://bat.tscn" id="1_tcvb3"]
 [ext_resource type="PackedScene" uid="uid://d2md16w8nikag" path="res://obstacle.tscn" id="2_hkenj"]
 [ext_resource type="PackedScene" uid="uid://1jgrfve4xu2c" path="res://score.tscn" id="3_wvos7"]
 [ext_resource type="Texture2D" uid="uid://cb5f48tq32tld" path="res://art/stripe.png" id="4_a4tnd"]
-[ext_resource type="FontFile" uid="uid://cv3k4on32y3st" path="res://art/MinimalPixel v2.ttf" id="5_gxbii"]
+[ext_resource type="Theme" uid="uid://bjpglvnm53vmk" path="res://default_theme.tres" id="7_th5nw"]
+[ext_resource type="Texture2D" uid="uid://g248nvtww5to" path="res://art/talltrees.png" id="9_5nux1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wdbn"]
 size = Vector2(499.5, 20)
@@ -84,6 +85,18 @@ tracks/5/keys = {
 "update": 0,
 "values": [Vector2(-2, 81)]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HUD/Ready?:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_mvg2v"]
 resource_name = "fade_to_black"
@@ -95,7 +108,7 @@ tracks/0/path = NodePath("HUD/Wipe:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -167,6 +180,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(2.08165e-12, 2.08165e-12), Vector2(-380, 2.08165e-12)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HUD/Ready?:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
 
 [sub_resource type="Animation" id="Animation_8y6ti"]
 resource_name = "whiteout"
@@ -222,12 +247,6 @@ script = ExtResource("1_ii88a")
 obstacle_scene = ExtResource("2_hkenj")
 score_scene = ExtResource("3_wvos7")
 
-[node name="BG" type="ColorRect" parent="."]
-z_index = -10
-offset_right = 420.0
-offset_bottom = 600.0
-color = Color(0.145098, 0, 0.384314, 1)
-
 [node name="Bat" parent="." instance=ExtResource("1_tcvb3")]
 z_index = 10
 position = Vector2(120, 88)
@@ -269,18 +288,19 @@ color = Color(0.156863, 0.00784314, 0.164706, 1)
 visible = false
 offset_top = -80.0
 offset_right = 420.0
-theme_override_fonts/font = ExtResource("5_gxbii")
+theme = ExtResource("7_th5nw")
 theme_override_font_sizes/font_size = 60
 text = "Game Over
 "
 horizontal_alignment = 1
 
 [node name="Ready?" type="Label" parent="HUD"]
+visible = false
 offset_left = -2.0
 offset_top = 81.0
 offset_right = 418.0
 offset_bottom = 177.0
-theme_override_fonts/font = ExtResource("5_gxbii")
+theme = ExtResource("7_th5nw")
 theme_override_font_sizes/font_size = 48
 text = "Ready?"
 horizontal_alignment = 1
@@ -293,10 +313,76 @@ offset_right = 851.0
 offset_bottom = 1209.0
 color = Color(0, 0, 0, 1)
 
+[node name="High Score" type="Label" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -300.0
+offset_right = -179.0
+offset_bottom = -276.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_th5nw")
+text = "Score: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ictdn")
 }
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="BG" type="ColorRect" parent="ParallaxBackground"]
+offset_right = 420.0
+offset_bottom = 600.0
+theme = ExtResource("7_th5nw")
+color = Color(0.145098, 0, 0.384314, 1)
+
+[node name="Back Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+visible = false
+position = Vector2(600, 2.08165e-12)
+motion_scale = Vector2(0.3, 0.3)
+motion_offset = Vector2(2.08165e-12, 2.08165e-12)
+motion_mirroring = Vector2(840, 2.08165e-12)
+
+[node name="Trees" type="Sprite2D" parent="ParallaxBackground/Back Trees"]
+modulate = Color(0.815686, 0.815686, 0.815686, 1)
+position = Vector2(2.08165e-12, 180)
+texture = ExtResource("9_5nux1")
+region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
+
+[node name="Mid Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(300, 2.08165e-12)
+scale = Vector2(0.5, 1)
+motion_scale = Vector2(0.4, 0.4)
+motion_offset = Vector2(2.08165e-12, 2.08165e-12)
+motion_mirroring = Vector2(420, 2.08165e-12)
+
+[node name="Trees" type="Sprite2D" parent="ParallaxBackground/Mid Trees"]
+modulate = Color(0.435294, 0.435294, 0.435294, 1)
+texture_repeat = 2
+position = Vector2(2.08165e-12, 200)
+texture = ExtResource("9_5nux1")
+region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
+
+[node name="Fore Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+visible = false
+position = Vector2(2.08165e-12, 2.08165e-12)
+motion_scale = Vector2(0.8, 0.8)
+motion_offset = Vector2(2.08165e-12, 2.08165e-12)
+motion_mirroring = Vector2(840, 2.08165e-12)
+
+[node name="Trees" type="Sprite2D" parent="ParallaxBackground/Fore Trees"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(2.08165e-12, 250)
+texture = ExtResource("9_5nux1")
+region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
 
 [connection signal="corpse_on_floor" from="Bat" to="." method="_on_bat_corpse_on_floor"]
 [connection signal="died" from="Bat" to="." method="_on_bat_died"]

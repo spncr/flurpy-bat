@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bjpglvnm53vmk"]
+
+[ext_resource type="FontFile" uid="uid://cv3k4on32y3st" path="res://art/MinimalPixel v2.ttf" id="1_cda4t"]
+
+[resource]
+default_font = ExtResource("1_cda4t")
+default_font_size = 24

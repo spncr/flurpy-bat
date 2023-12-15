@@ -44,9 +44,9 @@ func _process(delta):
 
 func get_ready():
 	_bat.get_ready(_start_position)
-	_animation_player.play_backwards("fade_to_black")
+	_animation_player.play("fade_to_black", -1, -2, true)
 	await _animation_player.animation_finished
-	_animation_player.play("ready_go", -1, -2, true)
+	_animation_player.play_backwards("ready_go")
 	game_state = GameState.READY
 
 func reset():
@@ -75,7 +75,8 @@ func end_game():
 	game_state = GameState.OVER
 
 func move_floor(delta):
-	_floor_stripe.region_rect.position.x += (speed / 2 * delta)
+	_floor_stripe.region_rect.position.x += (speed / _floor_stripe.scale.x * delta)
+	$ParallaxBackground.scroll_offset.x -= speed * delta
 
 
 func save_high_score():
