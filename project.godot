@@ -19,7 +19,6 @@ config/icon="res://art/icon.png"
 
 window/size/viewport_width=840
 window/size/viewport_height=1200
-window/size/resizable=false
 window/stretch/scale=2.0
 window/stretch/scale_mode="integer"
 

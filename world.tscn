@@ -1,12 +1,16 @@
-[gd_scene load_steps=15 format=3 uid="uid://ddewut8n78qfu"]
+[gd_scene load_steps=21 format=3 uid="uid://ddewut8n78qfu"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_ii88a"]
 [ext_resource type="PackedScene" uid="uid://brsb4agovh7fr" path="res://bat.tscn" id="1_tcvb3"]
 [ext_resource type="PackedScene" uid="uid://d2md16w8nikag" path="res://obstacle.tscn" id="2_hkenj"]
 [ext_resource type="PackedScene" uid="uid://1jgrfve4xu2c" path="res://score.tscn" id="3_wvos7"]
 [ext_resource type="Texture2D" uid="uid://cb5f48tq32tld" path="res://art/stripe.png" id="4_a4tnd"]
+[ext_resource type="Texture2D" uid="uid://bay47uhqc7vhw" path="res://art/backtrees.png" id="7_67vm1"]
+[ext_resource type="Texture2D" uid="uid://dng23lod7g4at" path="res://art/mountains.png" id="7_nogpv"]
 [ext_resource type="Theme" uid="uid://bjpglvnm53vmk" path="res://default_theme.tres" id="7_th5nw"]
+[ext_resource type="Texture2D" uid="uid://dutiwol6ytyhq" path="res://art/cloudy.png" id="8_swltb"]
 [ext_resource type="Texture2D" uid="uid://g248nvtww5to" path="res://art/talltrees.png" id="9_5nux1"]
+[ext_resource type="Texture2D" uid="uid://dj4j66f3k804f" path="res://art/midtrees.png" id="9_nt30k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wdbn"]
 size = Vector2(499.5, 20)
@@ -28,31 +32,31 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HUD/Wipe:modulate")
+tracks/1/path = NodePath("HUD/Ready?:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
+"update": 1,
+"values": [false]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HUD/Game Over:position")
+tracks/2/path = NodePath("HUD/Game Over Panel/Score:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.08165e-12, -80)]
+"update": 1,
+"values": [false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("HUD/Game Over:visible")
+tracks/3/path = NodePath("HUD/Game Over Panel/High Score:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -64,34 +68,22 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("HUD/Wipe:color")
+tracks/4/path = NodePath("HUD/Game Over Panel:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
+"update": 1,
+"values": [false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("HUD/Ready?:position")
+tracks/5/path = NodePath("HUD/Game Over Panel/Game Over:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-2, 81)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("HUD/Ready?:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -140,29 +132,90 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_7hdtt"]
 resource_name = "game_over_descends"
+length = 1.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("HUD/Game Over:position")
+tracks/0/path = NodePath("HUD/Game Over Panel:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(2.08165e-12, -80), Vector2(2.08165e-12, 200)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HUD/Game Over:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HUD/Game Over Panel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(30, -201), Vector2(30, 180)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HUD/Game Over Panel/Score:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HUD/Game Over Panel/Game Over:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(360, 200)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HUD/Game Over Panel/High Score:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HUD/Game Over Panel/Game Over:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HUD/Game Over Panel/Game Over:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 2.08165e-12)]
 }
 
 [sub_resource type="Animation" id="Animation_7mrrg"]
@@ -191,6 +244,69 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, true]
+}
+
+[sub_resource type="Animation" id="Animation_6lbbu"]
+resource_name = "show_scores"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HUD/Game Over Panel/High Score:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(420, 120), Vector2(2.08165e-12, 120)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HUD/Game Over Panel/Score:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HUD/Game Over Panel/High Score:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HUD/Game Over Panel/Game Over:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(360, 200), Vector2(360, 100)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HUD/Game Over Panel/Score:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-300, 100), Vector2(0, 80)]
 }
 
 [sub_resource type="Animation" id="Animation_8y6ti"]
@@ -239,8 +355,12 @@ _data = {
 "fade_to_black": SubResource("Animation_mvg2v"),
 "game_over_descends": SubResource("Animation_7hdtt"),
 "ready_go": SubResource("Animation_7mrrg"),
+"show_scores": SubResource("Animation_6lbbu"),
 "whiteout": SubResource("Animation_8y6ti")
 }
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ssl3j"]
+blend_mode = 2
 
 [node name="World" type="Node"]
 script = ExtResource("1_ii88a")
@@ -284,15 +404,68 @@ color = Color(0.156863, 0.00784314, 0.164706, 1)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Game Over" type="Label" parent="HUD"]
+[node name="Game Over Panel" type="Panel" parent="HUD"]
 visible = false
-offset_top = -80.0
-offset_right = 420.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 30.0
+offset_top = -201.0
+offset_right = 390.0
+offset_bottom = -1.00012
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("7_th5nw")
-theme_override_font_sizes/font_size = 60
+
+[node name="Game Over" type="Label" parent="HUD/Game Over Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_right = 360.0
+offset_bottom = 200.0
+grow_horizontal = 2
+theme = ExtResource("7_th5nw")
+theme_override_font_sizes/font_size = 48
 text = "Game Over
 "
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="HUD/Game Over Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 240.0
+offset_top = 400.0
+offset_right = 600.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_th5nw")
+text = "Score: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="High Score" type="Label" parent="HUD/Game Over Panel"]
+visible = false
+layout_mode = 0
+offset_left = 420.0
+offset_top = 120.0
+offset_right = 780.0
+offset_bottom = 170.0
+theme = ExtResource("7_th5nw")
+text = "High Score: 10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Ready?" type="Label" parent="HUD"]
 visible = false
@@ -308,28 +481,8 @@ vertical_alignment = 1
 
 [node name="Wipe" type="ColorRect" parent="HUD"]
 visible = false
-modulate = Color(1, 1, 1, 0)
 offset_right = 851.0
 offset_bottom = 1209.0
-color = Color(0, 0, 0, 1)
-
-[node name="High Score" type="Label" parent="HUD"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -300.0
-offset_right = -179.0
-offset_bottom = -276.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("7_th5nw")
-text = "Score: 1"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -342,37 +495,56 @@ libraries = {
 offset_right = 420.0
 offset_bottom = 600.0
 theme = ExtResource("7_th5nw")
-color = Color(0.145098, 0, 0.384314, 1)
+color = Color(0.0901961, 0.0431373, 0.25098, 1)
+
+[node name="Mountain" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(1260, 2.08165e-12)
+
+[node name="Mountains" type="Sprite2D" parent="ParallaxBackground/Mountain"]
+modulate = Color(0.513726, 0.513726, 0.513726, 1)
+texture = ExtResource("7_nogpv")
+centered = false
 
 [node name="Back Trees" type="ParallaxLayer" parent="ParallaxBackground"]
-visible = false
-position = Vector2(600, 2.08165e-12)
+position = Vector2(2.08165e-12, 2.08165e-12)
 motion_scale = Vector2(0.3, 0.3)
 motion_offset = Vector2(2.08165e-12, 2.08165e-12)
 motion_mirroring = Vector2(840, 2.08165e-12)
 
 [node name="Trees" type="Sprite2D" parent="ParallaxBackground/Back Trees"]
-modulate = Color(0.815686, 0.815686, 0.815686, 1)
-position = Vector2(2.08165e-12, 180)
-texture = ExtResource("9_5nux1")
+modulate = Color(0.321569, 0.321569, 0.321569, 1)
+position = Vector2(2.08165e-12, 2.08165e-12)
+texture = ExtResource("7_67vm1")
+centered = false
 region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
 
 [node name="Mid Trees" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(300, 2.08165e-12)
-scale = Vector2(0.5, 1)
+position = Vector2(2.08165e-12, 2.08165e-12)
 motion_scale = Vector2(0.4, 0.4)
 motion_offset = Vector2(2.08165e-12, 2.08165e-12)
-motion_mirroring = Vector2(420, 2.08165e-12)
+motion_mirroring = Vector2(840, 2.08165e-12)
 
 [node name="Trees" type="Sprite2D" parent="ParallaxBackground/Mid Trees"]
-modulate = Color(0.435294, 0.435294, 0.435294, 1)
+modulate = Color(0.184314, 0.184314, 0.184314, 1)
 texture_repeat = 2
-position = Vector2(2.08165e-12, 200)
-texture = ExtResource("9_5nux1")
+position = Vector2(2.08165e-12, 2.08165e-12)
+texture = ExtResource("9_nt30k")
+centered = false
 region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
 
-[node name="Fore Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Cloudy" type="ParallaxLayer" parent="ParallaxBackground"]
 visible = false
+motion_scale = Vector2(-0.2, -0.2)
+motion_mirroring = Vector2(1260, 2.08165e-12)
+
+[node name="Clouds" type="Sprite2D" parent="ParallaxBackground/Cloudy"]
+modulate = Color(1, 1, 1, 0.505882)
+material = SubResource("CanvasItemMaterial_ssl3j")
+texture = ExtResource("8_swltb")
+centered = false
+
+[node name="Fore Trees" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(2.08165e-12, 2.08165e-12)
 motion_scale = Vector2(0.8, 0.8)
 motion_offset = Vector2(2.08165e-12, 2.08165e-12)
@@ -380,8 +552,9 @@ motion_mirroring = Vector2(840, 2.08165e-12)
 
 [node name="Trees" type="Sprite2D" parent="ParallaxBackground/Fore Trees"]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(2.08165e-12, 250)
+position = Vector2(2.08165e-12, 2.08165e-12)
 texture = ExtResource("9_5nux1")
+centered = false
 region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
 
 [connection signal="corpse_on_floor" from="Bat" to="." method="_on_bat_corpse_on_floor"]

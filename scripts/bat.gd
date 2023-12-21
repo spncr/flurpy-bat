@@ -14,6 +14,7 @@ var can_input = false
 @onready var _sprite = $body
 @onready var _particles := $JumpParticles
 @onready var _flap_sound_player := $FlapSoundPlayer
+@onready var _death_sound_player := $DeathSoundPlayer
 
 func _process(delta):
 	if can_move:
@@ -21,7 +22,7 @@ func _process(delta):
 		
 		if Input.is_action_just_pressed("button") and can_input:
 			$AnimationPlayer.play("jump")
-			_flap_sound_player.pitch_scale = randf_range(0.8, 1.2)
+			_flap_sound_player.pitch_scale = randf_range(1, 3)
 			_flap_sound_player.play( )
 			velocity.y -= power * delta
 			_particles.restart()
@@ -47,9 +48,12 @@ func get_ready(pos):
 	
 func _on_area_entered(area):
 	velocity = Vector2.ZERO
+	_death_sound_player.pitch_scale = 0.4
+	_death_sound_player.play()
 	
 	if can_input == true:
 		$AnimationPlayer.play("dead")
+
 		emit_signal("died")
 	can_input = false
 	

@@ -1,7 +1,29 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bjpglvnm53vmk"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bjpglvnm53vmk"]
 
 [ext_resource type="FontFile" uid="uid://cv3k4on32y3st" path="res://art/MinimalPixel v2.ttf" id="1_cda4t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a5gtu"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.160784, 0.160784, 0.164706, 0.835294)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.482353, 0.482353, 0.482353, 0.509804)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 2
+shadow_color = Color(1, 0, 0, 0.6)
+shadow_offset = Vector2(10, 10)
+anti_aliasing = false
+anti_aliasing_size = 5.727
 
 [resource]
 default_font = ExtResource("1_cda4t")
 default_font_size = 24
+Panel/styles/panel = SubResource("StyleBoxFlat_a5gtu")

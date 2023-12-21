@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://brsb4agovh7fr"]
+[gd_scene load_steps=16 format=3 uid="uid://brsb4agovh7fr"]
 
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_icw6q"]
 [ext_resource type="Texture2D" uid="uid://c8tp050wq4yk3" path="res://art/bat_body.png" id="3_1cqq4"]
 [ext_resource type="Texture2D" uid="uid://dbnwste6m2nw3" path="res://art/bat_dead.png" id="4_48oam"]
 [ext_resource type="Texture2D" uid="uid://b7wmq5k4lj0px" path="res://art/bat_wing.png" id="4_w73b1"]
-[ext_resource type="AudioStream" uid="uid://dmrvd6o57a1lc" path="res://sound/flap.wav" id="5_nyqqi"]
+[ext_resource type="AudioStream" uid="uid://6a5f8wokdjui" path="res://sound/flap.wav" id="5_s5bac"]
+[ext_resource type="AudioStream" uid="uid://4fx8q232bwjj" path="res://sound/death.wav" id="6_ufsk3"]
 
 [sub_resource type="Animation" id="Animation_bkse2"]
 length = 0.001
@@ -225,8 +226,13 @@ trail_sections = 3
 trail_section_subdivisions = 1
 
 [node name="FlapSoundPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_nyqqi")
-volume_db = -10.0
+stream = ExtResource("5_s5bac")
+volume_db = -12.0
+max_polyphony = 2
+
+[node name="DeathSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ufsk3")
+max_polyphony = 4
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

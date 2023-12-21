@@ -22,7 +22,9 @@ var speed: float = 100
 @onready var _animation_player := $AnimationPlayer
 @onready var _obstacle_timer := $ObstacleTimer
 @onready var _floor_stripe := $Floor/Stripe
-@onready var _game_over_label := $"HUD/Game Over"
+@onready var _game_over_panel := $"HUD/Game Over Panel"
+@onready var _score_label := $"HUD/Game Over Panel/Score"
+@onready var _high_score_label := $"HUD/Game Over Panel/High Score"
 
 func _ready():
 	load_high_score()
@@ -37,7 +39,7 @@ func _process(delta):
 		GameState.GAME:
 			move_floor(delta)
 		GameState.OVER:
-			if Input.is_action_just_pressed("button") and not _animation_player.is_playing():
+			if Input.is_action_just_pressed("button"):
 				reset()
 				await reset() 
 				get_ready()
@@ -53,7 +55,7 @@ func reset():
 	_animation_player.play("fade_to_black")
 	await _animation_player.animation_finished
 	get_tree().call_group("obstacles", "queue_free")
-	_game_over_label.visible = false
+	_game_over_panel.visible = false
 
 func start_game():
 	_animation_player.play("ready_go")
@@ -69,9 +71,15 @@ func end_game():
 	_obstacle_timer.stop()
 	get_tree().call_group("obstacles", "stop_moving")
 	
+	_score_label.text = "Score: " + str(score)
 	if score > high_score:
 		high_score = score
 		save_high_score()
+		_high_score_label.text = "New High Score: " + str(high_score) + "!"
+	else:
+		_high_score_label.text = "High Score: " + str(high_score)
+	
+	_animation_player.play('show_scores')
 	game_state = GameState.OVER
 
 func move_floor(delta):
@@ -88,6 +96,7 @@ func load_high_score():
 	if FileAccess.file_exists(SAVE_FILE_PATH):
 		var save_data = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
 		high_score = save_data.get_var()
+
 
 func show_score():
 	var score_label = score_scene.instantiate()
