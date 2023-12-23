@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rak3wdr0qge5"
-path="res://.godot/imported/midtree.png-7116be230892b82f1be687a1130f631e.ctex"
+uid="uid://b67o72tbh4qob"
+path="res://.godot/imported/bg_stars.png-18b7ba309c3fc9364aba87180c33b29b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/midtree.png"
-dest_files=["res://.godot/imported/midtree.png-7116be230892b82f1be687a1130f631e.ctex"]
+source_file="res://art/bg_stars.png"
+dest_files=["res://.godot/imported/bg_stars.png-18b7ba309c3fc9364aba87180c33b29b.ctex"]
 
 [params]
 

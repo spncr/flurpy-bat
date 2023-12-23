@@ -48,14 +48,13 @@ func get_ready(pos):
 	
 func _on_area_entered(area):
 	velocity = Vector2.ZERO
-	_death_sound_player.pitch_scale = 0.4
+	_death_sound_player.pitch_scale = randf_range(0.4, 1.6)
 	_death_sound_player.play()
 	
 	if can_input == true:
 		$AnimationPlayer.play("dead")
-
 		emit_signal("died")
-	can_input = false
+		can_input = false
 	
 	if area.name == "Floor":
 		can_move = false

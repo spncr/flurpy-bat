@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g248nvtww5to"
-path="res://.godot/imported/talltrees.png-e5da73fe702faba6ed12867656f0a3bd.ctex"
+uid="uid://bn8j4x7g03im0"
+path="res://.godot/imported/obstacle_tree.png-124cd732d04f2c3e84a1371f68abd3c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/talltrees.png"
-dest_files=["res://.godot/imported/talltrees.png-e5da73fe702faba6ed12867656f0a3bd.ctex"]
+source_file="res://art/obstacle_tree.png"
+dest_files=["res://.godot/imported/obstacle_tree.png-124cd732d04f2c3e84a1371f68abd3c0.ctex"]
 
 [params]
 

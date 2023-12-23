@@ -1,16 +1,15 @@
-[gd_scene load_steps=21 format=3 uid="uid://ddewut8n78qfu"]
+[gd_scene load_steps=20 format=3 uid="uid://ddewut8n78qfu"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_ii88a"]
 [ext_resource type="PackedScene" uid="uid://brsb4agovh7fr" path="res://bat.tscn" id="1_tcvb3"]
 [ext_resource type="PackedScene" uid="uid://d2md16w8nikag" path="res://obstacle.tscn" id="2_hkenj"]
 [ext_resource type="PackedScene" uid="uid://1jgrfve4xu2c" path="res://score.tscn" id="3_wvos7"]
 [ext_resource type="Texture2D" uid="uid://cb5f48tq32tld" path="res://art/stripe.png" id="4_a4tnd"]
-[ext_resource type="Texture2D" uid="uid://bay47uhqc7vhw" path="res://art/backtrees.png" id="7_67vm1"]
-[ext_resource type="Texture2D" uid="uid://dng23lod7g4at" path="res://art/mountains.png" id="7_nogpv"]
+[ext_resource type="Texture2D" uid="uid://bay47uhqc7vhw" path="res://art/bg_back_forest.png" id="7_67vm1"]
+[ext_resource type="Texture2D" uid="uid://dng23lod7g4at" path="res://art/bg_mountains.png" id="7_nogpv"]
 [ext_resource type="Theme" uid="uid://bjpglvnm53vmk" path="res://default_theme.tres" id="7_th5nw"]
-[ext_resource type="Texture2D" uid="uid://dutiwol6ytyhq" path="res://art/cloudy.png" id="8_swltb"]
-[ext_resource type="Texture2D" uid="uid://g248nvtww5to" path="res://art/talltrees.png" id="9_5nux1"]
-[ext_resource type="Texture2D" uid="uid://dj4j66f3k804f" path="res://art/midtrees.png" id="9_nt30k"]
+[ext_resource type="Texture2D" uid="uid://b67o72tbh4qob" path="res://art/bg_stars.png" id="8_qlid8"]
+[ext_resource type="Texture2D" uid="uid://dj4j66f3k804f" path="res://art/bg_mid_forest.png" id="9_nt30k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wdbn"]
 size = Vector2(499.5, 20)
@@ -359,8 +358,8 @@ _data = {
 "whiteout": SubResource("Animation_8y6ti")
 }
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ssl3j"]
-blend_mode = 2
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hia66"]
+load_path = "res://.godot/imported/bg_fore_forest.png-28b0929823ec4ed0fc9034f9a206fbed.ctex"
 
 [node name="World" type="Node"]
 script = ExtResource("1_ii88a")
@@ -400,7 +399,7 @@ offset_left = -250.0
 offset_top = 5.0
 offset_right = 250.0
 offset_bottom = 70.0
-color = Color(0.156863, 0.00784314, 0.164706, 1)
+color = Color(0.054902, 0.0784314, 0.180392, 1)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -411,10 +410,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 30.0
-offset_top = -201.0
-offset_right = 390.0
-offset_bottom = -1.00012
+offset_left = 450.0
+offset_top = 399.0
+offset_right = 810.0
+offset_bottom = 599.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("7_th5nw")
@@ -425,7 +424,8 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_right = 360.0
+offset_left = 180.0
+offset_right = 540.0
 offset_bottom = 200.0
 grow_horizontal = 2
 theme = ExtResource("7_th5nw")
@@ -443,10 +443,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 240.0
-offset_top = 400.0
-offset_right = 600.0
-offset_bottom = 450.0
+offset_left = 420.0
+offset_top = 500.0
+offset_right = 780.0
+offset_bottom = 550.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("7_th5nw")
@@ -491,69 +491,56 @@ libraries = {
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
-[node name="BG" type="ColorRect" parent="ParallaxBackground"]
-offset_right = 420.0
-offset_bottom = 600.0
-theme = ExtResource("7_th5nw")
-color = Color(0.0901961, 0.0431373, 0.25098, 1)
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.01, 0.01)
+motion_mirroring = Vector2(576, 2.08165e-12)
+
+[node name="Stars" type="Sprite2D" parent="ParallaxBackground/Sky"]
+texture = ExtResource("8_qlid8")
+centered = false
 
 [node name="Mountain" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.1, 0.1)
 motion_mirroring = Vector2(1260, 2.08165e-12)
 
 [node name="Mountains" type="Sprite2D" parent="ParallaxBackground/Mountain"]
-modulate = Color(0.513726, 0.513726, 0.513726, 1)
 texture = ExtResource("7_nogpv")
 centered = false
 
-[node name="Back Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Back" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(2.08165e-12, 2.08165e-12)
 motion_scale = Vector2(0.3, 0.3)
 motion_offset = Vector2(2.08165e-12, 2.08165e-12)
 motion_mirroring = Vector2(840, 2.08165e-12)
 
-[node name="Trees" type="Sprite2D" parent="ParallaxBackground/Back Trees"]
-modulate = Color(0.321569, 0.321569, 0.321569, 1)
+[node name="Forest" type="Sprite2D" parent="ParallaxBackground/Back"]
 position = Vector2(2.08165e-12, 2.08165e-12)
 texture = ExtResource("7_67vm1")
 centered = false
 region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
 
-[node name="Mid Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Mid" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(2.08165e-12, 2.08165e-12)
 motion_scale = Vector2(0.4, 0.4)
 motion_offset = Vector2(2.08165e-12, 2.08165e-12)
 motion_mirroring = Vector2(840, 2.08165e-12)
 
-[node name="Trees" type="Sprite2D" parent="ParallaxBackground/Mid Trees"]
-modulate = Color(0.184314, 0.184314, 0.184314, 1)
+[node name="Forest" type="Sprite2D" parent="ParallaxBackground/Mid"]
 texture_repeat = 2
 position = Vector2(2.08165e-12, 2.08165e-12)
 texture = ExtResource("9_nt30k")
 centered = false
 region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
 
-[node name="Cloudy" type="ParallaxLayer" parent="ParallaxBackground"]
-visible = false
-motion_scale = Vector2(-0.2, -0.2)
-motion_mirroring = Vector2(1260, 2.08165e-12)
-
-[node name="Clouds" type="Sprite2D" parent="ParallaxBackground/Cloudy"]
-modulate = Color(1, 1, 1, 0.505882)
-material = SubResource("CanvasItemMaterial_ssl3j")
-texture = ExtResource("8_swltb")
-centered = false
-
-[node name="Fore Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Fore" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(2.08165e-12, 2.08165e-12)
 motion_scale = Vector2(0.8, 0.8)
 motion_offset = Vector2(2.08165e-12, 2.08165e-12)
 motion_mirroring = Vector2(840, 2.08165e-12)
 
-[node name="Trees" type="Sprite2D" parent="ParallaxBackground/Fore Trees"]
-modulate = Color(0, 0, 0, 1)
+[node name="Forest" type="Sprite2D" parent="ParallaxBackground/Fore"]
 position = Vector2(2.08165e-12, 2.08165e-12)
-texture = ExtResource("9_5nux1")
+texture = SubResource("CompressedTexture2D_hia66")
 centered = false
 region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
 

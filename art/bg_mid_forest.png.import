@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dutiwol6ytyhq"
-path="res://.godot/imported/cloudy.png-23d57aa2b18ec90636690d97e5aad40c.ctex"
+uid="uid://dj4j66f3k804f"
+path="res://.godot/imported/bg_mid_forest.png-4bdd937417af9fb4ac866d24df5afa6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/cloudy.png"
-dest_files=["res://.godot/imported/cloudy.png-23d57aa2b18ec90636690d97e5aad40c.ctex"]
+source_file="res://art/bg_mid_forest.png"
+dest_files=["res://.godot/imported/bg_mid_forest.png-4bdd937417af9fb4ac866d24df5afa6e.ctex"]
 
 [params]
 
