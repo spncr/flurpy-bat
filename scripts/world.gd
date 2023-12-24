@@ -12,10 +12,10 @@ enum GameState {
 const SAVE_FILE_PATH := "user://highscore.save"
 
 var game_state: GameState = GameState.READY
-
 var score: int = 0
 var high_score: int= 0
 var speed: float = 100
+var can_input = true
 
 @onready var _bat := $Bat
 @onready var _start_position: Vector2 = $StartPosition.position
@@ -39,7 +39,7 @@ func _process(delta):
 		GameState.GAME:
 			move_floor(delta)
 		GameState.OVER:
-			if Input.is_action_just_pressed("button"):
+			if Input.is_action_just_pressed("button") and can_input:
 				reset()
 				await reset() 
 				get_ready()
@@ -48,10 +48,12 @@ func get_ready():
 	_bat.get_ready(_start_position)
 	_animation_player.play("fade_to_black", -1, -2, true)
 	await _animation_player.animation_finished
+	can_input = true
 	_animation_player.play_backwards("ready_go")
 	game_state = GameState.READY
 
 func reset():
+	can_input = false
 	_animation_player.play("fade_to_black")
 	await _animation_player.animation_finished
 	get_tree().call_group("obstacles", "queue_free")
