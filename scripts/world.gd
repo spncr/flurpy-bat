@@ -15,7 +15,7 @@ var game_state: GameState = GameState.READY
 var score: int = 0
 var high_score: int= 0
 var speed: float = 100
-var can_input = true
+var can_input = false
 
 @onready var _bat := $Bat
 @onready var _start_position: Vector2 = $StartPosition.position
@@ -25,16 +25,18 @@ var can_input = true
 @onready var _game_over_panel := $"HUD/Game Over Panel"
 @onready var _score_label := $"HUD/Game Over Panel/Score"
 @onready var _high_score_label := $"HUD/Game Over Panel/High Score"
+@onready var _blink_timer := $BlinkTimer
 
 func _ready():
 	load_high_score()
 	get_ready()
 
+
 func _process(delta):
 	match game_state:
 		GameState.READY:
 			move_floor(delta)
-			if Input.is_action_just_pressed("button"):
+			if Input.is_action_just_pressed("button") and can_input:
 				start_game()
 		GameState.GAME:
 			move_floor(delta)
@@ -44,6 +46,7 @@ func _process(delta):
 				await reset() 
 				get_ready()
 
+
 func get_ready():
 	_bat.get_ready(_start_position)
 	_animation_player.play("fade_to_black", -1, -2, true)
@@ -52,12 +55,16 @@ func get_ready():
 	_animation_player.play_backwards("ready_go")
 	game_state = GameState.READY
 
+
 func reset():
 	can_input = false
 	_animation_player.play("fade_to_black")
 	await _animation_player.animation_finished
 	get_tree().call_group("obstacles", "queue_free")
 	_game_over_panel.visible = false
+	_blink_timer.stop()
+	_high_score_label.set_modulate(Color.WHITE)
+
 
 func start_game():
 	_animation_player.play("ready_go")
@@ -74,15 +81,24 @@ func end_game():
 	get_tree().call_group("obstacles", "stop_moving")
 	
 	_score_label.text = "Score: " + str(score)
+	var tween: Tween
+	
 	if score > high_score:
 		high_score = score
 		save_high_score()
-		_high_score_label.text = "New High Score: " + str(high_score) + "!"
+		_high_score_label.text = "New High Score!"
+		_blink_timer.start()
+
 	else:
+		if tween:
+			print("kill the tween")
+			tween.set_loops(0)
+			tween.kill()
 		_high_score_label.text = "High Score: " + str(high_score)
 	
 	_animation_player.play('show_scores')
 	game_state = GameState.OVER
+
 
 func move_floor(delta):
 	_floor_stripe.region_rect.position.x += (speed / _floor_stripe.scale.x * delta)
@@ -117,14 +133,25 @@ func _on_obstacle_timer_timeout():
 	obstacle.scored.connect(_on_scored)
 	add_child(obstacle)
 
+
 func _on_bat_died():
 	_animation_player.play("whiteout")
 	await _animation_player.animation_finished
 
+
 func _on_scored():
-	if game_state == GameState.GAME:
+	if game_state == GameState.GAME and _bat.can_input:
 		score += 1
 		show_score()
 
+
 func _on_bat_corpse_on_floor():
 	end_game()
+
+
+func _on_blink_timer_timeout():
+	var mod = _high_score_label.get_modulate()
+	if mod == Color.WHITE:
+		_high_score_label.set_modulate(Color("#9b83cc"))
+	else:
+		_high_score_label.set_modulate(Color.WHITE)

@@ -373,6 +373,9 @@ position = Vector2(120, 88)
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(120, 220)
 
+[node name="BlinkTimer" type="Timer" parent="."]
+wait_time = 0.2
+
 [node name="ObstacleTimer" type="Timer" parent="."]
 wait_time = 2.4
 
@@ -410,10 +413,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 450.0
-offset_top = 399.0
-offset_right = 810.0
-offset_bottom = 599.0
+offset_left = -390.0
+offset_top = -801.0
+offset_right = -30.0
+offset_bottom = -601.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("7_th5nw")
@@ -424,8 +427,8 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 180.0
-offset_right = 540.0
+offset_left = -180.0
+offset_right = 180.0
 offset_bottom = 200.0
 grow_horizontal = 2
 theme = ExtResource("7_th5nw")
@@ -456,6 +459,7 @@ vertical_alignment = 1
 
 [node name="High Score" type="Label" parent="HUD/Game Over Panel"]
 visible = false
+modulate = Color(0.607843, 0.513726, 0.8, 1)
 layout_mode = 0
 offset_left = 420.0
 offset_top = 120.0
@@ -546,4 +550,5 @@ region_rect = Rect2(2.08165e-12, 2.08165e-12, 840, 200)
 
 [connection signal="corpse_on_floor" from="Bat" to="." method="_on_bat_corpse_on_floor"]
 [connection signal="died" from="Bat" to="." method="_on_bat_died"]
+[connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]
 [connection signal="timeout" from="ObstacleTimer" to="." method="_on_obstacle_timer_timeout"]
