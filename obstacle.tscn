@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2md16w8nikag"]
+[gd_scene load_steps=5 format=3 uid="uid://d2md16w8nikag"]
 
 [ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_bic4e"]
 [ext_resource type="Texture2D" uid="uid://bn8j4x7g03im0" path="res://art/obstacle_tree.png" id="2_dhp1d"]
-[ext_resource type="AudioStream" uid="uid://k4e2f0j5gwkc" path="res://sound/squeak.wav" id="3_qfh0a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qrila"]
 size = Vector2(60, 410)
@@ -14,6 +13,7 @@ size = Vector2(4, 160)
 z_index = -1
 position = Vector2(2.08165e-12, 2.08165e-12)
 collision_mask = 0
+monitoring = false
 script = ExtResource("1_bic4e")
 
 [node name="TopShape" type="CollisionShape2D" parent="."]
@@ -46,15 +46,12 @@ position = Vector2(5, 79.5)
 scale = Vector2(5, 8.95)
 
 [node name="Score" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
+collision_layer = 2
+collision_mask = 0
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Score"]
 position = Vector2(2.08165e-12, 82)
 shape = SubResource("RectangleShape2D_7x5k8")
 
-[node name="SqueakPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_qfh0a")
-
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
-[connection signal="area_exited" from="Score" to="." method="_on_score_area_exited"]

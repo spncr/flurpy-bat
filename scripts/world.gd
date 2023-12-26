@@ -1,8 +1,5 @@
 extends Node
 
-@export var obstacle_scene: PackedScene
-@export var score_scene: PackedScene
-
 enum GameState {
 	READY,
 	GAME,
@@ -11,9 +8,12 @@ enum GameState {
 
 const SAVE_FILE_PATH := "user://highscore.save"
 
+@export var obstacle_scene: PackedScene
+@export var score_scene: PackedScene
+
 var game_state: GameState = GameState.READY
 var score: int = 0
-var high_score: int= 0
+var high_score: int = 0
 var speed: float = 100
 var can_input = false
 
@@ -26,6 +26,7 @@ var can_input = false
 @onready var _score_label := $"HUD/Game Over Panel/Score"
 @onready var _high_score_label := $"HUD/Game Over Panel/High Score"
 @onready var _blink_timer := $BlinkTimer
+
 
 func _ready():
 	load_high_score()
@@ -56,21 +57,10 @@ func get_ready():
 	game_state = GameState.READY
 
 
-func reset():
-	can_input = false
-	_animation_player.play("fade_to_black")
-	await _animation_player.animation_finished
-	get_tree().call_group("obstacles", "queue_free")
-	_game_over_panel.visible = false
-	_blink_timer.stop()
-	_high_score_label.set_modulate(Color.WHITE)
-
-
 func start_game():
 	_animation_player.play("ready_go")
 	_bat.can_move = true
 	_obstacle_timer.start()
-	score = 0
 	game_state = GameState.GAME
 
 
@@ -79,30 +69,41 @@ func end_game():
 	await _animation_player.animation_finished
 	_obstacle_timer.stop()
 	get_tree().call_group("obstacles", "stop_moving")
-	
+
 	_score_label.text = "Score: " + str(score)
-	var tween: Tween
-	
 	if score > high_score:
 		high_score = score
 		save_high_score()
 		_high_score_label.text = "New High Score!"
 		_blink_timer.start()
-
 	else:
-		if tween:
-			print("kill the tween")
-			tween.set_loops(0)
-			tween.kill()
 		_high_score_label.text = "High Score: " + str(high_score)
-	
 	_animation_player.play('show_scores')
+
 	game_state = GameState.OVER
+
+
+func reset():
+	can_input = false
+	_animation_player.play("fade_to_black")
+	await _animation_player.animation_finished
+	get_tree().call_group("obstacles", "queue_free")
+	_game_over_panel.visible = false
+	score = 0
+	_blink_timer.stop()
+	_high_score_label.set_modulate(Color.WHITE)
 
 
 func move_floor(delta):
 	_floor_stripe.region_rect.position.x += (speed / _floor_stripe.scale.x * delta)
 	$ParallaxBackground.scroll_offset.x -= speed * delta
+
+
+func show_score():
+	var score_label = score_scene.instantiate()
+	add_child(score_label)
+	score_label.position = _bat.position + (Vector2.LEFT * 48)
+	score_label.show_score(score, speed)
 
 
 func save_high_score():
@@ -116,33 +117,24 @@ func load_high_score():
 		high_score = save_data.get_var()
 
 
-func show_score():
-	var score_label = score_scene.instantiate()
-	add_child(score_label)
-	score_label.position = _bat.position + (Vector2.LEFT * 48)
-	score_label.show_score(score, speed)
-
-
-## Callbacks
 func _on_obstacle_timer_timeout():
 	var obstacle = obstacle_scene.instantiate()
 	obstacle.position.x = 500
 	obstacle.position.y = randf_range(60, 290)
 	obstacle.start_moving(speed)
 	obstacle.add_to_group("obstacles")
-	obstacle.scored.connect(_on_scored)
 	add_child(obstacle)
-
-
-func _on_bat_died():
-	_animation_player.play("whiteout")
-	await _animation_player.animation_finished
 
 
 func _on_scored():
 	if game_state == GameState.GAME and _bat.can_input:
 		score += 1
 		show_score()
+
+
+func _on_bat_died():
+	_animation_player.play("whiteout")
+	await _animation_player.animation_finished
 
 
 func _on_bat_corpse_on_floor():

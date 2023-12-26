@@ -1,30 +1,40 @@
-extends Area2D
+@icon("res://art/bat_body.png")
+class_name Bat extends Area2D
 
+signal scored()
 signal died()
 signal corpse_on_floor()
+
+enum Layer {
+	DEATH = 1,
+	SCORE = 2
+}
+
+const GRAV = 1100
+const MAX_SPEED = 1200
+const POWER = 32000
 
 var velocity = Vector2.ZERO
 var can_move = false
 var can_input = false 
 
-@export var grav = 1100
-@export var MAX_SPEED = 1200
-@export var power = 32000
-
 @onready var _sprite = $body
 @onready var _particles := $JumpParticles
+@onready var _animation_player := $AnimationPlayer
 @onready var _flap_sound_player := $FlapSoundPlayer
 @onready var _death_sound_player := $DeathSoundPlayer
+@onready var _squeak_sound_player := $SqueakSoundPlayer
+
 
 func _process(delta):
 	if can_move:
-		velocity.y += grav * delta
+		velocity.y += GRAV * delta
 		
 		if Input.is_action_just_pressed("button") and can_input:
-			$AnimationPlayer.play("jump")
+			_animation_player.play("jump")
 			_flap_sound_player.pitch_scale = randf_range(1, 3)
 			_flap_sound_player.play( )
-			velocity.y -= power * delta
+			velocity.y -= POWER * delta
 			_particles.restart()
 			_particles.emitting = true
 
@@ -40,27 +50,32 @@ func _process(delta):
 		position += velocity * delta
 		position.y = clampf(position.y, -20, 500)
 
+
 func get_ready(pos):
 	position = pos
 	can_input = true
-	$AnimationPlayer.play("flappy")
+	_animation_player.play("flappy")
 	_sprite.set_rotation(0)
-	
+
+
 func _on_area_entered(area):
-	velocity = Vector2.ZERO
-	_death_sound_player.pitch_scale = randf_range(0.4, 1.6)
-	_death_sound_player.play()
-	
-	if can_input == true:
-		$AnimationPlayer.play("dead")
-		emit_signal("died")
-		can_input = false
-	
-	if area.name == "Floor":
-		can_move = false
-		emit_signal("corpse_on_floor")
+	if area.get_collision_layer_value(Layer.DEATH):
+		velocity = Vector2.ZERO
+		_death_sound_player.pitch_scale = randf_range(0.4, 1.6)
+		_death_sound_player.play()
+
+		if can_input == true:
+			_animation_player.play("dead")
+			emit_signal("died")
+			can_input = false
+
+		if area.name == "Floor":
+			can_move = false
+			emit_signal("corpse_on_floor")
 
 
-func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "jump":
-		$AnimationPlayer.play("flappy")
+func _on_area_exited(area):
+	if area.get_collision_layer_value(Layer.SCORE) and can_input:
+		_squeak_sound_player.pitch_scale = randf_range(.8, 2)
+		_squeak_sound_player.play()
+		emit_signal("scored")
